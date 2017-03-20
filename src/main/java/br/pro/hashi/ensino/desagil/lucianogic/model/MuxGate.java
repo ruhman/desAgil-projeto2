@@ -21,7 +21,7 @@ public class MuxGate extends Gate {
 
 	@Override
 	protected void doConnect(Emitter emitter, int index) {
-		
+		// logic; http://improve.dk/creating-multiplexers-using-logic-gates/
 		switch (index) {
 		case 0:
 			nandGate.connect(emitter, 0);
