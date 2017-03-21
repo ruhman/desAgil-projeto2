@@ -2,44 +2,41 @@ package br.pro.hashi.ensino.desagil.lucianogic.model;
 
 public class MuxGate extends Gate {
 	private NandGate nandGate;
+	private NandGate nandGate1;
 	private NandGate nandGate2;
-	private OrGate orGate;
-	private NotGate notGate;
-
+	private NandGate nandGate3;
 	public MuxGate() {
-		super(1);
+		super(3);
 		nandGate = new NandGate();
-		nandGate2 = new NandGate();
-		orGate = new OrGate();
-		notGate = new NotGate();
+		nandGate1 = new NandGate();
+		nandGate2= new NandGate();
+		nandGate3 = new NandGate();
 	}
-
+	
 	@Override
 	public boolean read() {
-		return orGate.read();
+		return nandGate3.read();
 	}
 
 	@Override
 	protected void doConnect(Emitter emitter, int index) {
-		// logic; http://improve.dk/creating-multiplexers-using-logic-gates/
 		switch (index) {
 		case 0:
-			nandGate.connect(emitter, 0);
+			nandGate1.connect(emitter, 0);
 			break;
 		case 1:
-			nandGate2.connect(emitter, 1);
+			nandGate2.connect(emitter, 0);
 			break;
-			
-		// Case 2 => selector input
-		case 3:
-			notGate.connect(emitter, 0);
+		default:
+			nandGate.connect(emitter, 0);
 			nandGate.connect(emitter, 1);
-			nandGate2.connect(notGate, 0);
+			nandGate2.connect(emitter, 1);
+			nandGate1.connect(nandGate ,1);
+			nandGate3.connect(nandGate1 ,0);
+			nandGate3.connect(nandGate2 ,1);	
 			break;
 		}
-		
-		orGate.connect(nandGate, 0);
-		orGate.connect(nandGate2, 1);
+
 	}
 
 }
