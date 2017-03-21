@@ -31,10 +31,10 @@ public class MuxGate extends Gate {
 			break;
 			
 		// Case 2 => selector input
-		default:
+		case 3:
 			notGate.connect(emitter, 0);
-			nandGate.connect(notGate, 1);
-			nandGate2.connect(emitter, 0);
+			nandGate.connect(emitter, 1);
+			nandGate2.connect(notGate, 0);
 			break;
 		}
 		
