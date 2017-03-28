@@ -33,6 +33,7 @@ public class LogicGatesView extends JPanel implements ItemListener {
 		this.gate = gate;
 			
 		// set checkbox here
+		resultCheckbox = new JCheckBox("");
 		resultCheckbox.setEnabled(false);
 
 		// stack components at vertical layout
