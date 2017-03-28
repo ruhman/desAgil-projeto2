@@ -80,27 +80,15 @@ public class LogicGatesView extends JPanel implements ItemListener {
 		Object source = e.getItemSelectable();
 		
 		if (source == checkBoxes.get(0)) {
-			System.out.println("First");
-			System.out.println(gate);
 			pino0.setOn(true);
-			System.out.println(gate.read());
 			
 		} else if (source == checkBoxes.get(1)) {
-			System.out.println("second");
 			pino1.setOn(true);
-			System.out.println(gate);
-			System.out.println(gate.read());
-			
 		} else  if (source == checkBoxes.get(2)) {
-			System.out.println("third");
 			pino2.setOn(true);
-			System.out.println(gate);
-			System.out.println(gate.read());
-			
 		}
 		
 		if (e.getStateChange() == ItemEvent.DESELECTED) {
-			System.out.println("Deselected");
 			if (source == checkBoxes.get(0)) {
 				pino0.setOn(false);
 				
