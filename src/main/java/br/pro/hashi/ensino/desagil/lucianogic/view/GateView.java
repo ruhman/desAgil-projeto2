@@ -49,6 +49,7 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 		this.output = new LED(40, 40, 40);
 		this.ledColor = new Color(46, 204, 113);
 		this.inactiveColor = new Color(149, 165, 166);
+		output.connect(gate, 0);
 				
 		image = loadImage(gate.toString());
 		
@@ -100,10 +101,12 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 	public void actionPerformed(ActionEvent e) {
 		Color color = JColorChooser.showDialog(this, null, null);
 
-		if(color != null) {
+		if(color == ledColor) {
 			ledColor = color;
-			repaint();
+		}else{
+			inactiveColor = color;
 		}
+		repaint();
 	}
 	
 		private Image loadImage(String filename) {
@@ -113,14 +116,18 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 		}
 		@Override
 		public void paintComponent(Graphics g) {
-			System.out.println("Called");
 			g.drawImage(image, 10, 150, 100, 100, null);
 			Graphics2D g2d = (Graphics2D)g;
-			
-			//TODO: Mudar aqui para o valor correto: inactiveColor se estiver apagado, ou ledColor
+			if (output.isOn() == false){
+				System.out.println("false");
+				g2d.setPaint(inactiveColor);
+			} else {
+			System.out.println("True");
 			g2d.setPaint(ledColor);
+			}
 			Ellipse2D.Double circle = new Ellipse2D.Double(10, 110, 30, 30);
 			g2d.fill(circle);
+			repaint();
 			
 			getToolkit().sync();
 	    }
