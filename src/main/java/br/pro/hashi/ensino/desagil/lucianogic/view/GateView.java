@@ -102,7 +102,11 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 		Color color = JColorChooser.showDialog(this, null, null);
 		this.output = new LED(40, 40, 40);
 		output.connect(gate, 0);
+		if (output.isOn() == true){
 		ledColor = color;
+		} else {
+			inactiveColor = color;
+		}
 		repaint();
 	}
 	
