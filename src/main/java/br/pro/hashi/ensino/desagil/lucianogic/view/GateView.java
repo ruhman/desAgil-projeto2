@@ -40,21 +40,28 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 	
 	private LED output;
 	private Color ledColor;
-	private Color inactiveColor;
+	static Color activeColor;
+	static Color inactiveColor;
 
 	public GateView(Gate gate) {
-		super(150, 300);
+		super(300, 300);
 		this.gate = gate;
 
 		this.output = new LED(40, 40, 40);
-		this.ledColor = new Color(46, 204, 113);
-		this.inactiveColor = new Color(149, 165, 166);
+
+		if (activeColor == null) {
+			activeColor = new Color(46, 204, 113);
+		} 
+		if (inactiveColor == null) {
+			inactiveColor = new Color(149, 165, 166);
+		}
+
 		output.connect(gate, 0);
 				
 		image = loadImage(gate.toString());
 		
-		JLabel inLabel = new JLabel("Entrada:");
-		JLabel outLabel = new JLabel("Saida:");
+		JLabel inLabel = new JLabel("<html><body>Mude as entradas abaixo para alterar o LED<br>Você pode trocar a cor do LED ON e do OFF</body></html>");
+		JLabel outLabel = new JLabel("LED Out");
 
 		int size = gate.getSize();
 
@@ -69,21 +76,43 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 			gate.connect(switches[i], i);
 		}
 
-		add(inLabel, 10, 0, 100, 25);
-		int index = 1;
-		for(JCheckBox inBox: inBoxes) {
-			add(inBox, 10, 20*index, 50, 20);
-			index += 1;
+		add(inLabel, 10, -20, 300, 100);
+
+		// In checkboxes
+		for (int index = 0; index < inBoxes.length; index++) {
+			switch (index) {
+			case 0:
+				add(inBoxes[index], 55, 110, 30, 30);
+				break;
+			case 1:
+				add(inBoxes[index], 55, 150, 30, 30);				
+				break;
+			default:
+				add(inBoxes[index], 130, 215, 30, 30);				
+				break;
+			}
+
 		}
-		add(outLabel, 10, 80, 100, 25);
+		
+		add(outLabel, 220, 100, 100, 25);
 		
 		colorButton = new JButton();
 		colorButton.setOpaque(true);
 		colorButton.addActionListener(this);
-		add(colorButton, 50, 115, 15, 15);
+		add(colorButton, 280, 103, 15, 15);
 		
+		checkLedStatus();
 	}
+	
+	private void checkLedStatus(){
+		if (output.isOn() == true){
+			ledColor = activeColor;
+		} else {
+			ledColor = inactiveColor;
+		}
 
+		repaint();
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent event) {
@@ -95,6 +124,7 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 		}
 
 		switches[i].setOn(inBoxes[i].isSelected());
+		checkLedStatus();
 	}
 	
 	@Override
@@ -102,12 +132,14 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 		Color color = JColorChooser.showDialog(this, null, null);
 		this.output = new LED(40, 40, 40);
 		output.connect(gate, 0);
+		
 		if (output.isOn() == true){
-		ledColor = color;
+			activeColor = color;
 		} else {
 			inactiveColor = color;
 		}
-		repaint();
+
+		checkLedStatus();
 	}
 	
 		private Image loadImage(String filename) {
@@ -117,18 +149,11 @@ public class GateView extends FixedPanel implements ItemListener, ActionListener
 		}
 		@Override
 		public void paintComponent(Graphics g) {
-			g.drawImage(image, 10, 150, 100, 100, null);
+			g.drawImage(image, 75, 75, 150, 150, null);
 			Graphics2D g2d = (Graphics2D)g;
-			if (output.isOn() == false){
-				System.out.println("false");
-				g2d.setPaint(inactiveColor);
-			} else {
-			System.out.println("True");
 			g2d.setPaint(ledColor);
-			}
-			Ellipse2D.Double circle = new Ellipse2D.Double(10, 110, 30, 30);
+			Ellipse2D.Double circle = new Ellipse2D.Double(225, 125, 50, 50);
 			g2d.fill(circle);
-			repaint();
 			
 			getToolkit().sync();
 	    }
