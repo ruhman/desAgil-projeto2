@@ -12,7 +12,7 @@ public class NotGate extends Gate {
 
 	@Override
 	public boolean read() {
-		return nandGate.read();
+		return !nandGate.read();
 	}
 
 	@Override
