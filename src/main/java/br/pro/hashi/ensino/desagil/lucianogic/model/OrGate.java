@@ -8,8 +8,6 @@ public class OrGate extends Gate {
 	public OrGate() {
 		super(2);
 
-		name = "OR";
-
 		nandTop = new NandGate();
 
 		nandBottom = new NandGate();
@@ -17,6 +15,8 @@ public class OrGate extends Gate {
 		nandRight = new NandGate();
 		nandRight.connect(nandTop, 0);
 		nandRight.connect(nandBottom, 1);
+		
+		name = "Or";
 	}
 
 	@Override

@@ -7,13 +7,13 @@ public class AndGate extends Gate {
 	public AndGate() {
 		super(2);
 
-		name = "AND";
-
 		nandLeft = new NandGate();
 
 		nandRight = new NandGate();
 		nandRight.connect(nandLeft, 0);
 		nandRight.connect(nandLeft, 1);
+		
+		name = "And";
 	}
 
 	@Override

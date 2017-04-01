@@ -2,7 +2,7 @@ package br.pro.hashi.ensino.desagil.lucianogic.model;
 
 public abstract class Gate implements Receiver, Emitter {
 	private int size;
-	protected String name;
+	protected String name; 
 
 	protected Gate(int size) {
 		this.size = size;
@@ -17,12 +17,12 @@ public abstract class Gate implements Receiver, Emitter {
 	}
 
 	protected abstract void doConnect(Emitter emitter, int index);
-
+	
 	public String toString() {
 		return name;
 	}
-
+	
 	public int getSize() {
-		return size;
+		return this.size;
 	}
 }

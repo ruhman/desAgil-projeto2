@@ -9,8 +9,6 @@ public class XorGate extends Gate {
 	public XorGate() {
 		super(2);
 
-		name = "XOR";
-
 		nandLeft = new NandGate();
 
 		nandTop = new NandGate();
@@ -22,6 +20,8 @@ public class XorGate extends Gate {
 		nandRight = new NandGate();
 		nandRight.connect(nandTop, 0);
 		nandRight.connect(nandBottom, 1);
+		
+		name = "Xor";
 	}
 
 	@Override

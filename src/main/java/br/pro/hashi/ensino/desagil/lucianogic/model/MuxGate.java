@@ -9,8 +9,6 @@ public class MuxGate extends Gate {
 	public MuxGate() {
 		super(3);
 
-		name = "MUX";
-
 		nandLeft = new NandGate();
 
 		nandTop = new NandGate();
@@ -21,6 +19,8 @@ public class MuxGate extends Gate {
 		nandRight = new NandGate();
 		nandRight.connect(nandTop, 0);
 		nandRight.connect(nandBottom, 1);
+		
+		name = "Mux";
 	}
 
 	@Override
